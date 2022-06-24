@@ -404,6 +404,10 @@ jobs:
           TOXENV: ${{ matrix.PYTHON.TOXENV }}
           EXTRA_CFLAGS: ${{ matrix.PYTHON.EXTRA_CFLAGS }}
           CARGO_TARGET_DIR: ${{ format('{0}/src/rust/target/', github.workspace) }}
+          # Explicitly ask for x86-64 wheels. GHA has started shipping
+          # universal2 Pythons, but they don't work correctly.
+          ARCHFLAGS: '-arch x86_64'
+          _PYTHON_HOST_PLATFORM: 'macosx-10.9-x86_64'
 
       - uses: ./.github/actions/upload-coverage
 
